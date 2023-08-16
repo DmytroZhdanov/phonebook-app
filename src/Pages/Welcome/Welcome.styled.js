@@ -1,29 +1,16 @@
 import styled from '@emotion/styled';
 
-export const Container = styled.div`
-  width: 350px;
-  margin: 0 auto;
-  padding: 20px 0;
-`;
-
-export const Title1 = styled.div`
+export const Title = styled.div`
   font-size: 28px;
+  line-height: 1.2;
   font-weight: 700;
-  margin-bottom: 12px;
-`;
-
-export const Title2 = styled.div`
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 12px;
-`;
-
-export const Wrapper = styled.div`
-  border: 1px solid #555555;
-  border-radius: 16px;
-  padding: 12px;
-`;
-
-export const Message = styled.p`
+  margin-top: 84px;
+  margin-bottom: 20px;
   text-align: center;
-`
+`;
+
+export const Text = styled.p`
+  font-size: 12px;
+  text-align: center;
+  color: #707070
+`;

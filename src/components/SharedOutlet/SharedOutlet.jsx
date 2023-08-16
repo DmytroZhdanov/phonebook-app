@@ -1,50 +1,33 @@
 import Loader from 'components/Loader/Loader';
-import { Suspense } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { Suspense, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink, Outlet } from 'react-router-dom';
-import { logOut } from 'redux/auth/operations';
-import { selectIsLoggedIn, selectUser } from 'redux/auth/selectors';
-import { Container, Header } from './SharedOutlet.styled';
+import { selectIsLoggedIn } from 'redux/auth/selectors';
+import { Header } from './SharedOutlet.styled';
+import { Burger } from 'components/Burger/Burger';
+import { Logo } from 'components/Logo/Logo';
+import { HeaderContent } from 'components/HeaderContent/HeaderContent';
+import { MobileMenu } from 'components/MobileMenu/MobileMenu';
 
 export const SharedOutlet = () => {
+  const [showMenu, setShowMenu] = useState(false)
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const user = useSelector(selectUser);
-  const dispatch = useDispatch();
+  const isMobile = window.screen.width < 768;
 
-  const handleLogOut = () => {
-    dispatch(logOut())
-  }
-
-    return (
-      <>
-        <Header>
-          <NavLink to="/">Phonebook</NavLink>
-          {isLoggedIn && <NavLink to="/contacts">Contacts</NavLink>}
-          <Container>
-            {isLoggedIn ? (
-              <>
-                <p>Welcome, {user.name}!</p>
-                <NavLink to="/" onClick={handleLogOut}>
-                  Log Out
-                </NavLink>
-              </>
-            ) : (
-              <ul>
-                <li>
-                  <NavLink to="/register">Sign Up</NavLink>
-                </li>
-                <li>
-                  <NavLink to="/login">Log In</NavLink>
-                </li>
-              </ul>
-            )}
-          </Container>
-        </Header>
-        <main>
-          <Suspense fallback={<Loader />}>
-            <Outlet />
-          </Suspense>
-        </main>
-      </>
-    );
-  };
+  return (
+    <>
+      <Header>
+        <Logo isMobile={isMobile} />
+        {isLoggedIn && !isMobile && <NavLink to="/contacts">Contacts</NavLink>}
+        <HeaderContent isLoggedIn={isLoggedIn} isMobile={isMobile} />
+        {isMobile && <Burger setShowMenu={setShowMenu} />}
+        {showMenu && <MobileMenu setShowMenu={setShowMenu} />}
+      </Header>
+      <main>
+        <Suspense fallback={<Loader />}>
+          <Outlet />
+        </Suspense>
+      </main>
+    </>
+  );
+};

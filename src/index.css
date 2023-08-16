@@ -30,7 +30,6 @@ footer, header, hgroup, menu, nav, section {
 
 body {
 	line-height: 1;
-	background-color: #C6DEE3;
 }
 
 ol, ul {
@@ -52,3 +51,12 @@ table {
 	border-spacing: 0;
 }
 /* ========================= /Reset styles ========================= */
+
+body {
+	background-color: #C6DEE3;
+	font-family: 'Inter', sans-serif;
+}
+
+a {
+	color: #000
+}

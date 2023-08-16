@@ -15,9 +15,8 @@ import {
   Container,
   Message,
   Title1,
-  Title2,
   Wrapper,
-} from '../Welcome/Welcome.styled';
+} from '../Contacts/Contacts.styled';
 
 const Contacts = () => {
   const dispatch = useDispatch();
@@ -32,10 +31,9 @@ const Contacts = () => {
 
   return (
     <Container>
-      <Title1>Phonebook</Title1>
       <ContactForm />
-      <Title2>Contacts</Title2>
       <Wrapper>
+      <Title1>Contacts</Title1>
         {loading && <Loader />}
         {error && <p>{error}</p>}
         {contacts.length > 0 ? (

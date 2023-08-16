@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { deleteContact } from 'redux/contacts/operations';
 import { ContactItem, DeleteButton } from './Contact.styled';
+import { RiDeleteBin6Line } from 'react-icons/ri';
 
 export const Contact = ({ name, number, id }) => {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ export const Contact = ({ name, number, id }) => {
         {name}: {number}
       </p>
       <DeleteButton type="button" onClick={handleDelete}>
-        Delete
+        <RiDeleteBin6Line />
       </DeleteButton>
     </ContactItem>
   );
@@ -23,5 +24,5 @@ export const Contact = ({ name, number, id }) => {
 Contact.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  phone: PropTypes.string.isRequired,
+  number: PropTypes.string.isRequired,
 };

@@ -5,7 +5,7 @@ export const Form = styled.form`
   border-radius: 16px;
   padding: 12px;
   margin-bottom: 24px;
-`
+`;
 
 export const Label = styled.label`
   display: block;
@@ -15,6 +15,10 @@ export const Label = styled.label`
 
 export const Input = styled.input`
   margin-bottom: 16px;
+  padding: 14px 15px;
+  width: 260px;
+  border-radius: 10px;
+  border: 2px solid #efefef;
 `;
 
 export const AddButton = styled.button`

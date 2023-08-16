@@ -1,22 +1,23 @@
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { selectIsLoggedIn } from 'redux/auth/selectors';
+import { Text, Title } from './Welcome.styled';
 
 const Welcome = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   return (
     <>
-      <h1>Welcome to your Phonebook Web App!</h1>
+      <Title>Welcome to your Phonebook Web App!</Title>
       {isLoggedIn ? (
-        <p>
+        <Text>
           Click {<NavLink to="/contacts">here</NavLink>} to view your contacts
-        </p>
+        </Text>
       ) : (
-        <p>
+        <Text>
           {<NavLink to="/register">Sign up</NavLink>} or{' '}
           {<NavLink to="/login">Log in</NavLink>} to get started
-        </p>
+        </Text>
       )}
     </>
   );
