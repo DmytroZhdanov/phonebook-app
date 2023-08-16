@@ -2,6 +2,8 @@ import { lazy, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { refreshUser } from 'redux/auth/operations';
+import { PrivateRoute } from './PrivateRoute';
+import { RestrictedRoute } from './RestrictedRoute';
 import { SharedOutlet } from './SharedOutlet/SharedOutlet';
 
 export const App = () => {
@@ -20,9 +22,18 @@ export const App = () => {
     <Routes>
       <Route path="/" element={<SharedOutlet />}>
         <Route index element={<Welcome />} />
-        <Route path="contacts" element={<Contacts />} />
-        <Route path="register" element={<Register />} />
-        <Route path="login" element={<Login />} />
+        <Route
+          path="contacts"
+          element={<PrivateRoute component={<Contacts />} />}
+        />
+        <Route
+          path="register"
+          element={<RestrictedRoute component={<Register />} />}
+        />
+        <Route
+          path="login"
+          element={<RestrictedRoute component={<Login />} />}
+        />
         <Route path="*" element={<Navigate to="/" />} />
       </Route>
     </Routes>

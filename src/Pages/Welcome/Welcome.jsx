@@ -10,7 +10,7 @@ const Welcome = () => {
       <h1>Welcome to your Phonebook Web App!</h1>
       {isLoggedIn ? (
         <p>
-          Click {<NavLink to="/contacts">here</NavLink>} to check your contacts
+          Click {<NavLink to="/contacts">here</NavLink>} to view your contacts
         </p>
       ) : (
         <p>
