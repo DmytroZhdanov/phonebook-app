@@ -19,6 +19,7 @@ export const MobileMenu = ({ setShowMenu }) => {
 
   const handleLogOut = () => {
     dispatch(logOut());
+    handleClick();
   };
 
   const handleBackdropClick = (e) => {

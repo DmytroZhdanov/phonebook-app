@@ -9,12 +9,9 @@ export const LogoContainer = styled(NavLink)`
   text-decoration: none;
 `;
 
-// export const LogoIcon = styled(RiContactsBookFill)`
-//   width: 20px;
-//   height: 20px;
-// `;
-
 export const LogoText = styled.span`
   font-size: 24px;
   font-weight: 700;
+  text-decoration: ${props =>
+    props.current === 'true' ? 'underline' : 'none'};
 `;

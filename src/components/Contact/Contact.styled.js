@@ -6,14 +6,18 @@ export const ContactItem = styled.li`
   height: 40px;
   padding: 0 8px;
   &:not(:last-of-type) {
-    border-bottom: 1px solid #555555;
+    border-bottom: 1px solid #efefef;
   }
-  &:nth-of-type(even) {
-    background-color: #dddddd;
-  }
+`;
+
+export const Text = styled.p`
+  font-size: 14px;
 `;
 
 export const DeleteButton = styled.button`
   height: 24px;
   margin-left: auto;
+  background-color: transparent;
+  padding: 0;
+  border: none;
 `;

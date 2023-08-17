@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { NavLink } from 'react-router-dom';
 
 export const Header = styled.header`
   margin: 0 auto;
@@ -18,3 +19,10 @@ export const Header = styled.header`
   }
 `;
 
+export const ContactLink = styled(NavLink)`
+  display: block;
+  font-size: 24px;
+  padding: 8px;
+  font-weight: 700;
+  text-decoration: ${props => (props.current === 'true' ? 'underline' : 'none')};
+`;

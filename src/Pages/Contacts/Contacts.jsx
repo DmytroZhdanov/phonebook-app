@@ -15,6 +15,7 @@ import {
   Container,
   Message,
   Title1,
+  Title2,
   Wrapper,
 } from '../Contacts/Contacts.styled';
 
@@ -31,9 +32,12 @@ const Contacts = () => {
 
   return (
     <Container>
-      <ContactForm />
       <Wrapper>
-      <Title1>Contacts</Title1>
+        <Title1>New Contact</Title1>
+        <ContactForm />
+      </Wrapper>
+      <Wrapper>
+        <Title2>Contacts</Title2>
         {loading && <Loader />}
         {error && <p>{error}</p>}
         {contacts.length > 0 ? (

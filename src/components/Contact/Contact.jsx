@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { deleteContact } from 'redux/contacts/operations';
-import { ContactItem, DeleteButton } from './Contact.styled';
+import { ContactItem, DeleteButton, Text } from './Contact.styled';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 
 export const Contact = ({ name, number, id }) => {
@@ -11,11 +11,11 @@ export const Contact = ({ name, number, id }) => {
 
   return (
     <ContactItem>
-      <p>
+      <Text>
         {name}: {number}
-      </p>
+      </Text>
       <DeleteButton type="button" onClick={handleDelete}>
-        <RiDeleteBin6Line />
+        <RiDeleteBin6Line size="20" color='#C8C8C8'/>
       </DeleteButton>
     </ContactItem>
   );
