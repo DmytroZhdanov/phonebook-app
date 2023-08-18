@@ -7,6 +7,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: end;
   font-size: 20px;
+  margin-left: auto;
 
   @media screen and (min-width: 768px) {
     flex-direction: row;
@@ -15,9 +16,13 @@ export const Container = styled.div`
 
 export const Greeting = styled.p`
   width: 180px;
-  margin: auto 0;
+  margin: auto 12px auto 0;
   text-wrap: wrap;
   text-align: center;
+
+  @media screen and (min-width: 768px) {
+    margin-right: 24px;
+  }
 `;
 
 export const LogOutLink = styled(NavLink)`
