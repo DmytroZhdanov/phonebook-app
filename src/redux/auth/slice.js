@@ -19,57 +19,44 @@ const handleRejected = state => {
   state.isLoading = false;
 };
 
+const handleFulfilled = state => {
+  state.isLoading = false;
+};
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  extraReducers: {
-    [register.pending](state) {
-      handlePending(state);
-    },
-    [register.fulfilled](state, action) {
-      state.user = action.payload.user;
-      state.token = action.payload.token;
-      state.isLoggedIn = true;
-      state.isLoading = false;
-    },
-    [register.rejected](state) {
-      handleRejected(state);
-    },
-    [logIn.pending](state) {
-      handlePending(state);
-    },
-    [logIn.fulfilled](state, action) {
-      state.user = action.payload.user;
-      state.token = action.payload.token;
-      state.isLoggedIn = true;
-      state.isLoading = false;
-    },
-    [logIn.rejected](state) {
-      handleRejected(state);
-    },
-    [logOut.pending](state) {
-      handlePending(state);
-    },
-    [logOut.fulfilled](state) {
-      state.user = { name: null, email: null };
-      state.token = null;
-      state.isLoggedIn = false;
-      state.isLoading = false;
-    },
-    [logOut.rejected](state) {
-      handleRejected(state);
-    },
-    [refreshUser.pending](state) {
-      state.isRefreshing = true;
-    },
-    [refreshUser.fulfilled](state, action) {
-      state.user = action.payload;
-      state.isLoggedIn = true;
-      state.isRefreshing = false;
-    },
-    [refreshUser.rejected](state) {
-      state.isRefreshing = false;
-    },
+  extraReducers: builder => {
+    builder
+      .addCase(register.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+        state.isLoggedIn = true;
+      })
+      .addCase(logIn.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+        state.isLoggedIn = true;
+      })
+      .addCase(logOut.fulfilled, state => {
+        state.user = { name: null, email: null };
+        state.token = null;
+        state.isLoggedIn = false;
+      })
+      .addCase(refreshUser.pending, state => {
+        state.isRefreshing = true;
+      })
+      .addCase(refreshUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isLoggedIn = true;
+        state.isRefreshing = false;
+      })
+      .addCase(refreshUser.rejected, state => {
+        state.isRefreshing = false;
+      })
+      .addMatcher(action => action.type.endsWith('/pending'), handlePending)
+      .addMatcher(action => action.type.endsWith('/fulfilled'), handleFulfilled)
+      .addMatcher(action => action.type.endsWith('/rejected'), handleRejected);
   },
 });
 
