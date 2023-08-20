@@ -1,10 +1,7 @@
 import { Contact } from 'components/Contact/Contact';
-import { useSelector } from 'react-redux';
-import { selectVisibleContacts } from 'redux/contacts/selectors';
+import PropTypes from 'prop-types';
 
-export const ContactList = () => {
-  const contacts = useSelector(selectVisibleContacts);
-
+export const ContactList = ({ contacts }) => {
   return (
     <ul>
       {contacts.map(({ name, number, id }) => {
@@ -12,4 +9,14 @@ export const ContactList = () => {
       })}
     </ul>
   );
+};
+
+ContactList.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };

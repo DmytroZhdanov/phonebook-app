@@ -1,30 +1,39 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { selectIsLoggedIn } from 'redux/auth/selectors';
+import { selectToken } from 'redux/auth/selectors';
 import { NavLink } from 'react-router-dom';
-import { logOut } from 'redux/auth/operations';
 import { createPortal } from 'react-dom';
-import { BackDrop, CloseButton, Container, Item, List } from './MobileMenu.styled';
+import {
+  BackDrop,
+  CloseButton,
+  Container,
+  Item,
+  List,
+} from './MobileMenu.styled';
 import { GrClose } from 'react-icons/gr';
 import { RiLogoutBoxRLine } from 'react-icons/ri';
 import PropTypes from 'prop-types';
+import { useLogoutMutation } from 'redux/auth/api';
+import { initialState, setCredentials } from 'redux/auth/authSlice';
 
 export const MobileMenu = ({ setShowMenu }) => {
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector(selectIsLoggedIn);
   const mobMenuRoot = document.querySelector('#mob-menu-root');
+  const [logout] = useLogoutMutation();
+  const token = useSelector(selectToken);
 
   const handleClick = () => {
     setShowMenu(false);
   };
 
   const handleLogOut = () => {
-    dispatch(logOut());
+    logout();
+    dispatch(setCredentials(initialState));
     handleClick();
   };
 
-  const handleBackdropClick = (e) => {
+  const handleBackdropClick = e => {
     e.currentTarget === e.target && setShowMenu(false);
-  }
+  };
 
   return createPortal(
     <BackDrop onClick={handleBackdropClick}>
@@ -33,7 +42,7 @@ export const MobileMenu = ({ setShowMenu }) => {
           <GrClose size="32" />
         </CloseButton>
 
-        {isLoggedIn ? (
+        {token ? (
           <List>
             <Item>
               <NavLink to="/contacts" onClick={handleClick}>

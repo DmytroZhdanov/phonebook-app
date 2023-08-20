@@ -12,6 +12,10 @@ export const ContactItem = styled.li`
 
 export const Text = styled.p`
   font-size: 14px;
+
+  @media screen and (min-width: 768px) {
+    font-size: 16px;
+  }
 `;
 
 export const DeleteButton = styled.button`

@@ -2,7 +2,7 @@ import Loader from 'components/Loader/Loader';
 import { Suspense, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Outlet, useLocation } from 'react-router-dom';
-import { selectIsLoggedIn } from 'redux/auth/selectors';
+import { selectToken } from 'redux/auth/selectors';
 import { ContactLink, Header } from './SharedOutlet.styled';
 import { Burger } from 'components/Burger/Burger';
 import { Logo } from 'components/Logo/Logo';
@@ -11,7 +11,7 @@ import { MobileMenu } from 'components/MobileMenu/MobileMenu';
 
 export const SharedOutlet = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const token = useSelector(selectToken);
   const isMobile = window.screen.width < 768;
   const { pathname } = useLocation();
 
@@ -19,7 +19,7 @@ export const SharedOutlet = () => {
     <>
       <Header>
         <Logo isMobile={isMobile} isCurrent={pathname === '/'} />
-        {isLoggedIn && !isMobile && (
+        {token && !isMobile && (
           <ContactLink
             to="/contacts"
             current={(pathname === '/contacts').toString()}
@@ -27,7 +27,7 @@ export const SharedOutlet = () => {
             Contacts
           </ContactLink>
         )}
-        <HeaderContent isLoggedIn={isLoggedIn} isMobile={isMobile} />
+        <HeaderContent isLoggedIn={token ? true : false} isMobile={isMobile} />
         {isMobile && <Burger setShowMenu={setShowMenu} />}
         {showMenu && <MobileMenu setShowMenu={setShowMenu} />}
       </Header>

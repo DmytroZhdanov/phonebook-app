@@ -7,17 +7,19 @@ import {
   LogOutSvg,
 } from './HeaderContent.styled';
 import { selectUser } from 'redux/auth/selectors';
-import { logOut } from 'redux/auth/operations';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { useLogoutMutation } from 'redux/auth/api';
+import { initialState, setCredentials } from 'redux/auth/authSlice';
 
 export const HeaderContent = ({ isLoggedIn, isMobile }) => {
   const user = useSelector(selectUser);
-
   const dispatch = useDispatch();
+  const [logout] = useLogoutMutation();
 
   const handleLogOut = () => {
-    dispatch(logOut());
+    logout();
+    dispatch(setCredentials(initialState));
   };
 
   return (

@@ -15,5 +15,5 @@ export const Burger = ({ setShowMenu }) => {
 };
 
 Burger.propTypes = {
-  setShowMenu: PropTypes.func.isRequired
-}
+  setShowMenu: PropTypes.func.isRequired,
+};

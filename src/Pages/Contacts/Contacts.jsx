@@ -1,13 +1,7 @@
 import Loader from 'components/Loader/Loader';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchContacts } from 'redux/contacts/operations';
-import {
-  selectContacts,
-  selectError,
-  selectIsLoading,
-  selectVisibleContacts,
-} from 'redux/contacts/selectors';
+import { useSelector } from 'react-redux';
+import { useFetchContactsQuery } from 'redux/auth/api';
+import { selectFilter } from 'redux/contacts/selectors';
 import { ContactForm } from '../../components/ContactForm/ContactForm';
 import { ContactList } from '../../components/ContactList/ContactList';
 import { Filter } from '../../components/Filter/Filter';
@@ -20,31 +14,29 @@ import {
 } from '../Contacts/Contacts.styled';
 
 const Contacts = () => {
-  const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
-  const loading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
-  const visibleContacts = useSelector(selectVisibleContacts);
+  const { data: contacts, isFetching, error } = useFetchContactsQuery();
 
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
+  const filter = useSelector(selectFilter);
+
+  const visibleContacts = contacts?.filter(contact =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   return (
     <Container>
       <Wrapper>
         <Title1>New Contact</Title1>
-        <ContactForm />
+        <ContactForm contacts={contacts ?? []} />
       </Wrapper>
       <Wrapper>
         <Title2>Contacts</Title2>
-        {loading && <Loader />}
-        {error && <p>{error}</p>}
-        {contacts.length > 0 ? (
+        {isFetching && <Loader />}
+        {error && <p>{'error'}</p>}
+        {contacts?.length > 0 ? (
           <>
             <Filter />
-            {visibleContacts.length > 0 ? (
-              <ContactList />
+            {visibleContacts?.length > 0 ? (
+              <ContactList contacts={visibleContacts} />
             ) : (
               <Message>
                 Sorry, we didn't find any contacts matching your query

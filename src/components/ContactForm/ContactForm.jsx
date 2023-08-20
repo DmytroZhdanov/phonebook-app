@@ -1,15 +1,12 @@
 import { Button, Form, Input, Label } from 'components/Form.styled';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/contacts/operations';
-import { selectContacts } from 'redux/contacts/selectors';
+import { useAddContactMutation } from 'redux/auth/api';
+import PropTypes from 'prop-types';
 
-export const ContactForm = () => {
-  const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
-
+export const ContactForm = ({ contacts }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const [addContact] = useAddContactMutation();
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -28,11 +25,11 @@ export const ContactForm = () => {
     }
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
     const newContact = { name, number };
-    const matchedContact = contacts.find(
+    const matchedContact = contacts?.find(
       ({ name }) => name.toLowerCase() === newContact.name.toLowerCase()
     );
 
@@ -41,7 +38,7 @@ export const ContactForm = () => {
       return;
     }
 
-    dispatch(addContact(newContact));
+    addContact(newContact);
     reset();
   };
 
@@ -90,4 +87,14 @@ export const ContactForm = () => {
       <Button type="submit">Add contact</Button>
     </Form>
   );
+};
+
+ContactForm.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };

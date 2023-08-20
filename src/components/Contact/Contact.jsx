@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-import { deleteContact } from 'redux/contacts/operations';
 import { ContactItem, DeleteButton, Text } from './Contact.styled';
 import { RiDeleteBin6Line } from 'react-icons/ri';
+import { useDeleteContactMutation } from 'redux/auth/api';
 
 export const Contact = ({ name, number, id }) => {
-  const dispatch = useDispatch();
+  const [deleteContact] = useDeleteContactMutation();
 
-  const handleDelete = () => dispatch(deleteContact(id));
+  const handleDelete = async () => {
+    deleteContact(id);
+  };
 
   return (
     <ContactItem>
@@ -15,7 +16,7 @@ export const Contact = ({ name, number, id }) => {
         {name}: {number}
       </Text>
       <DeleteButton type="button" onClick={handleDelete}>
-        <RiDeleteBin6Line size="20" color='#C8C8C8'/>
+        <RiDeleteBin6Line size="20" color="#C8C8C8" />
       </DeleteButton>
     </ContactItem>
   );

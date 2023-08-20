@@ -1,5 +1,4 @@
 import { useDispatch } from 'react-redux';
-import { logIn } from 'redux/auth/operations';
 import { Title1 } from 'Pages/Contacts/Contacts.styled';
 import {
   Container,
@@ -12,26 +11,31 @@ import {
 } from 'components/Form.styled';
 import { Eye } from 'components/Eye/Eye';
 import { useState } from 'react';
+import { setCredentials } from 'redux/auth/authSlice';
+import { useLoginMutation } from 'redux/auth/api';
 
 const Login = () => {
   const dispatch = useDispatch();
 
-  const [login, setLogin] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    const form = e.currentTarget;
+  const [login] = useLoginMutation();
 
-    dispatch(
-      logIn({
-        email: form.elements.email.value,
-        password: form.elements.password.value,
-      })
-    );
+  const handleSubmit = async e => {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    const formState = {
+      email: form.elements.email.value,
+      password: form.elements.password.value,
+    };
 
     form.reset();
+
+    const data = await login(formState).unwrap();
+    dispatch(setCredentials(data));
   };
 
   const handleBlur = e => {
@@ -46,7 +50,7 @@ const Login = () => {
 
     switch (name) {
       case 'email':
-        setLogin(value);
+        setEmail(value);
         break;
 
       case 'password':
@@ -70,7 +74,7 @@ const Login = () => {
               name="email"
               onBlur={handleBlur}
               onChange={handleChange}
-              value={login}
+              value={email}
               required
             />
           </Label>
@@ -87,9 +91,7 @@ const Login = () => {
             />
           </Label>
           <Eye show={showPassword} setShowPassword={setShowPassword} />
-          <Button type="submit" >
-            Log in
-          </Button>
+          <Button type="submit">Log in</Button>
         </Form>
         <Text to="/register">or Sign Up</Text>
       </Wrapper>
