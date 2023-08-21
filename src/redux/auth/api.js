@@ -64,7 +64,7 @@ export const {
   useLoginMutation,
   useLogoutMutation,
   useLazyRefreshQuery,
-  useFetchContactsQuery,
+  useLazyFetchContactsQuery,
   useAddContactMutation,
   useDeleteContactMutation,
 } = api;

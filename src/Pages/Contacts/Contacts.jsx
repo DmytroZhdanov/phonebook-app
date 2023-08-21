@@ -1,6 +1,7 @@
 import Loader from 'components/Loader/Loader';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useFetchContactsQuery } from 'redux/auth/api';
+import { useLazyFetchContactsQuery } from 'redux/auth/api';
 import { selectFilter } from 'redux/contacts/selectors';
 import { ContactForm } from '../../components/ContactForm/ContactForm';
 import { ContactList } from '../../components/ContactList/ContactList';
@@ -14,13 +15,18 @@ import {
 } from '../Contacts/Contacts.styled';
 
 const Contacts = () => {
-  const { data: contacts, isFetching, error } = useFetchContactsQuery();
+  const [fetchContacts, { data: contacts, isFetching, error }] = useLazyFetchContactsQuery();
 
   const filter = useSelector(selectFilter);
 
   const visibleContacts = contacts?.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
+
+  useEffect(() => {
+    fetchContacts();
+  }, [fetchContacts])
+  
 
   return (
     <Container>
